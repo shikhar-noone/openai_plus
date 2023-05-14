@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+*.mo
+/venv
+.env
+env.production
+env.devtest
+.DS_Store
+._*
+*.log
+.vscode/*
+!.vscode/settings.json
+geo
