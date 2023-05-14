@@ -11,3 +11,4 @@ env.devtest
 .vscode/*
 !.vscode/settings.json
 geo
+.*
