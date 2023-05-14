@@ -26,7 +26,33 @@ SECRET_KEY = "django-insecure-j*s*7p7%i!t*jm6*ju5p=jejbia#+r(kf07-rw(=+v0zjn76b-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
+CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:8020"]
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_METHODS = (
+    "GET",
+    "POST",
+    "PATCH",
+    "OPTIONS",
+    "DELETE",
+)
+CORS_ALLOW_HEADERS = (
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+    "x-requested-with",
+    "referer",
+    "X-Razorpay-Signature",
+    "x-tenant",
+    "source",
+)
 
 
 # Application definition
