@@ -13,6 +13,7 @@ COPY . /opt/app/
 
 WORKDIR /opt/app
 RUN pip install -r requirements.txt --cache-dir /opt/app/pip_cache
+RUN python manage.py collectstatic --no-input
 RUN chown -R www-data:www-data /opt/app
 
 EXPOSE 8020
