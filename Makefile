@@ -30,8 +30,6 @@ deploy-conf:
 		-e DJANGO_SUPERUSER_EMAIL=admin@example.com \
 		openai_plus_image
 
-remove-container:
+remove-container-image:
 	docker rm -f openai_container
-
-remove-image:
 	docker image rm openai_plus_image
