@@ -24,7 +24,7 @@ deploy-conf:
 	python manage.py makemigrations
 	python manage.py migrate
 	docker build -t openai_plus_image .
-	docker run --name openai_container -it -p 8020:8020 \
+	docker run --name openai_container -p 8020:8020 \
 		-e DJANGO_SUPERUSER_USERNAME=admin \
 		-e DJANGO_SUPERUSER_PASSWORD=sekret1 \
 		-e DJANGO_SUPERUSER_EMAIL=admin@example.com \
@@ -33,3 +33,9 @@ deploy-conf:
 remove-container-image:
 	docker rm -f openai_container
 	docker image rm openai_plus_image
+
+shell_plus:
+	docker exec openai_container python manage.py shell_plus --ipython
+
+reload-nginx:
+	docker exec -it openai_container service nginx reload

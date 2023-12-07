@@ -1,6 +1,6 @@
 server {
     listen 8020;
-    server_name www.openai_plus.com;
+    server_name http://openai_plus.start.shikhar;
 
     location / {
         proxy_pass http://127.0.0.1:8010;
@@ -9,5 +9,10 @@ server {
     }
     location /static {
         root /opt/app/static;
+    }
+    error_page 500 /500.html;
+    location = /500.html {
+        root /opt/app/openai_plus/error_page/;
+        internal;
     }
 }
