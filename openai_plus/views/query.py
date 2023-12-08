@@ -18,6 +18,8 @@ class QueryViewSet(APIView):
             return Response(data={"message": "please provide query"}, status=status.HTTP_501_NOT_IMPLEMENTED)
         if value == "3":
             return Response(data={"message": "please provide query"}, status=400)
+        if value == "7":
+            return Response(data={"message": "yes boi"}, status=400)
         queryset = ChatQuery.objects.all()
         ser = ChatQuerySerializer(queryset, many=True)
         print(ser.data)
