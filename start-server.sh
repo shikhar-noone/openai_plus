@@ -6,5 +6,7 @@ set -e
 #     (python manage.py createsuperuser --no-input)
 # fi
 
-(gunicorn noone.wsgi --user www-data --reload --bind 0.0.0.0:8010 --workers 3) &
-nginx -g "daemon off;"
+# (gunicorn noone.wsgi --user www-data --reload --bind 0.0.0.0:8010 --workers 3) &
+# nginx -g "daemon off;"
+
+gunicorn noone.wsgi --user www-data --preload --bind 0.0.0.0:8010 --workers 3
