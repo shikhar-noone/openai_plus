@@ -8,6 +8,7 @@ sqlparse==0.4.4
 gunicorn==19.7.1
 openai==0.27.6
 requests==2.28.2
-mysqlclient==2.2.0
+mysql-connector-python==8.0.26
+# mysqlclient==2.2.0
 # tensorflow==2.13.0rc0
 ipython==8.18.1

@@ -40,10 +40,10 @@ reload-nginx:
 	docker exec -it openai_container service nginx reload
 
 migrate:
-	docker run --rm openai_plus_image python manage.py migrate
+	docker compose -f ./docker.compose.local.yml run --rm openai python manage.py migrate
 
 makemigrations:
-	docker run --rm openai_plus_image python manage.py makemigrations
+	docker compose -f ./docker.compose.local.yml run --rm openai python manage.py makemigrations
 
 getvolume:
 	docker inspect -f '{{ .Mounts }}' openai_container

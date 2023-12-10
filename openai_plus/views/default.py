@@ -7,10 +7,13 @@ from rest_framework.response import Response
 class DefaultViewSet(APIView):
 
     def get(self, request):
-        queryset = ChatQuery.objects.all()
-        ser = ChatQuerySerializer(queryset, many=True)
-        print(ser.data)
-        return Response(data=ser.data, status=200)
+        try:
+            print("In default")
+            queryset = ChatQuery.objects.all()
+            ser = ChatQuerySerializer(queryset, many=True)
+            return Response(data=ser.data, status=200)
+        except Exception as err:
+            return Response(data={"message":"default view"})
 
 
     

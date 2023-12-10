@@ -10,6 +10,7 @@ RUN mkdir -p app
 # RUN mkdir -p app/pip_cache
 # COPY data/.pip_cache app/pip_cache/
 WORKDIR /app
+RUN apt-get update && apt-get upgrade -y
 COPY ./requirements.txt /app
 RUN pip install --upgrade pip
 RUN pip install -r ./requirements.txt

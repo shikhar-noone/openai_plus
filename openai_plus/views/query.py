@@ -17,7 +17,7 @@ class QueryViewSet(APIView):
         if value == "6":
             return Response(data={"message": "please provide query"}, status=status.HTTP_501_NOT_IMPLEMENTED)
         if value == "3":
-            return Response(data={"message": "please provide query"}, status=400)
+            return Response(data={"message": "please provide query, where"}, status=400)
         if value == "7":
             return Response(data={"message": "yes boi"}, status=400)
         queryset = ChatQuery.objects.all()
@@ -26,6 +26,7 @@ class QueryViewSet(APIView):
         return Response(data=ser.data, status=200)
 
     def post(self, request):
+        print("I was here")
         data = request.data.copy()
         query = data.get("query", None)
         language = data.get("language", None)

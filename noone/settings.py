@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-j*s*7p7%i!t*jm6*ju5p=jejbia#+r(kf07-rw(=+v0zjn76b-"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:8020"]
@@ -115,12 +115,16 @@ WSGI_APPLICATION = "noone.wsgi.application"
 
 DATABASES = {
     "default": {
-        'ENGINE': 'django.db.backends.mysql',
+        # 'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'mysql.connector.django',
         'NAME': os.environ.get('DJANGO_DB_NAME'),
         'USER': os.environ.get('DJANGO_DB_USER'),
         'PASSWORD': os.environ.get('DJANGO_DB_PASSWORD'),
         'HOST': os.environ.get('DJANGO_DB_HOST'),
         'PORT': os.environ.get('DJANGO_DB_PORT'),
+        'OPTIONS': {
+            'auth_plugin': 'mysql_native_password'
+        },
     }
 }
 

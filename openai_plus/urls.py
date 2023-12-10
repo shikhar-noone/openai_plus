@@ -9,6 +9,7 @@ handler500 = errors.custom_error_500
 
 
 urlpatterns = [
-    path('', default.DefaultViewSet.as_view(), name='query'),
+    re_path('/?$', default.DefaultViewSet.as_view(), name='query'),
+    re_path('query/?$', query.QueryViewSet.as_view(), name='query'),
     re_path('query/(?P<value>\d+)/?$', query.QueryViewSet.as_view(), name='query'),
 ]
