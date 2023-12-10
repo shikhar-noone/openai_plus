@@ -47,3 +47,6 @@ makemigrations:
 
 getvolume:
 	docker inspect -f '{{ .Mounts }}' openai_container
+
+bw:
+	docker compose -f ./docker.compose.local.yml build watcher

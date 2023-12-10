@@ -4,6 +4,7 @@ from openai_plus.serializers.chat_query import ChatQuerySerializer
 from openai_plus.models import ChatQuery
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from django.http import HttpResponse
 from rest_framework import status
 class QueryViewSet(APIView):
 
@@ -20,6 +21,30 @@ class QueryViewSet(APIView):
             return Response(data={"message": "please provide query, where"}, status=400)
         if value == "7":
             return Response(data={"message": "yes boi"}, status=400)
+        if value == "8":
+            res = """
+                <html>
+                <head>
+                    <script>
+                        const turn = (value) => {
+                            console.log(value, 'where');
+                            document.getElementById('demo').innerHTML = 'Hello World';
+                            if (value === 'red') {
+                                document.getElementById('demo').style.color = 'red';
+                            } else {
+                                document.getElementById('demo').style.color = 'blue';
+                            }
+                        }
+                    </script>
+                </head>
+                <body>
+                    <h1 id='demo'>Hey bro, what's up!! heheehee, how did I do that, No, watch metf joinjh hshs no man</h1>
+                    <h1 id='demo'>should i do anything else</h1>
+                    <button onclick="turn('red')">Click me</button>
+                </body>
+                </html>
+            """
+            return HttpResponse(res, content_type="text/HTML")
         queryset = ChatQuery.objects.all()
         ser = ChatQuerySerializer(queryset, many=True)
         print(ser.data)

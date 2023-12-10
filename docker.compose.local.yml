@@ -13,7 +13,9 @@ services:
 
   # Django service
   openai:
-    build: .
+    build: 
+      context: .
+      dockerfile: Dockerfile
     container_name: chill_container
     volumes:
       - .:/app
@@ -33,5 +35,20 @@ services:
     volumes:
       - ./default.conf:/etc/nginx/conf.d/default.conf
       # - .:/app
+    depends_on:
+      - openai
+
+  # Watcher service
+  # watch basically uses the inotify feature of linux which is used for subscribing to events like modify, create, delete, move of files and directories, using this we can restart our server....not recommended for production
+  watcher:
+    build: 
+      context: .
+      dockerfile: Dockerfile.watcher
+    container_name: watcher_container
+    volumes:
+      - ./openai_plus:/app/openai_plus
+      # - ./noone:/app/noone
+    command: > 
+      sh -c "./watcher_actions.sh"
     depends_on:
       - openai
