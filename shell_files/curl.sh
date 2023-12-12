@@ -17,3 +17,19 @@ curl=$(cat $file_location)
 # echo $curl
 # executing curl and saving the response in curl_response.txt
 eval $curl >> curl_response.txt
+
+
+
+
+# curl -L -X GET -o ./output.txt 'http://127.0.0.1:8040/query/1' \
+# -H 'X-Digio-Checksum: 9876543210' \
+# -H 'Content-Type: application/json'
+
+
+# curl -L -X POST 'http://127.0.0.1:8040/query/' \
+# -H 'X-Digio-Checksum: 9876543210' \
+# -H 'Content-Type: application/json' \
+# --data-raw '{
+#     "query": "what is not not possible",
+#     "language": "danish"
+# }'
