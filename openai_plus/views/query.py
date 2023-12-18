@@ -6,9 +6,15 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.http import HttpResponse
 from rest_framework import status
+from logging import getLogger
+
+logger = getLogger('custom_logger')
 class QueryViewSet(APIView):
 
     def get(self, request, value):
+        logger.debug("this log should go console.")
+        logger.info("this log should go in testfile.log as well as in console.")
+        logger.warning("this log should go in testfile.log and testlogfile.log as well as in console.")
         if value == "ir":
             raise InternalError("server issue")
         if value == "test-success":
@@ -52,8 +58,8 @@ class QueryViewSet(APIView):
                 </body>
                 </html>
             """
-            if value == "graphs":
-                res = """
+        if value == "graphs":
+            res = """
                 <html>
                 <head>
                     <script>

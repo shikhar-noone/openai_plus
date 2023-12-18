@@ -10,8 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+from logging import FileHandler
 from pathlib import Path
 import os
+import sys
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -128,6 +130,34 @@ DATABASES = {
     }
 }
 
+LOGGING = {
+    'version': 1,
+    "root": {"level": 'DEBUG', "handlers": ["console"]},
+    'handlers': {
+        "console": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "stream": sys.stdout,
+        },
+        'custom_handler': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': 'testfile.log'
+        },
+        'custom_handler_2': {
+            'level': 'WARNING',
+            'class': 'logging.FileHandler',
+            'filename': 'testlogfile.log',
+        }
+    },
+    'loggers': {
+        'custom_logger': {
+            'level': 'DEBUG',
+            'handlers': ['custom_handler', 'custom_handler_2'],
+            'propagate': True
+        }
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
