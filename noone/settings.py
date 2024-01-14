@@ -10,8 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+from logging import FileHandler
 from pathlib import Path
 import os
+import sys
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,7 +28,33 @@ SECRET_KEY = "django-insecure-j*s*7p7%i!t*jm6*ju5p=jejbia#+r(kf07-rw(=+v0zjn76b-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
+CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:8020", "http://127.0.0.1:8040"]
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_METHODS = (
+    "GET",
+    "POST",
+    "PATCH",
+    "OPTIONS",
+    "DELETE",
+)
+CORS_ALLOW_HEADERS = (
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+    "x-requested-with",
+    "referer",
+    "X-Razorpay-Signature",
+    "x-tenant",
+    "source",
+)
 
 
 # Application definition
@@ -40,6 +68,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "rest_framework.authtoken",
+    "django_extensions",
     "openai_plus"
 ]
 
@@ -88,11 +117,47 @@ WSGI_APPLICATION = "noone.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        # 'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'mysql.connector.django',
+        'NAME': os.environ.get('DJANGO_DB_NAME'),
+        'USER': os.environ.get('DJANGO_DB_USER'),
+        'PASSWORD': os.environ.get('DJANGO_DB_PASSWORD'),
+        'HOST': os.environ.get('DJANGO_DB_HOST'),
+        'PORT': os.environ.get('DJANGO_DB_PORT'),
+        'OPTIONS': {
+            'auth_plugin': 'mysql_native_password'
+        },
     }
 }
 
+LOGGING = {
+    'version': 1,
+    "root": {"level": 'DEBUG', "handlers": ["console"]},
+    'handlers': {
+        "console": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "stream": sys.stdout,
+        },
+        'custom_handler': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': 'testfile.log'
+        },
+        'custom_handler_2': {
+            'level': 'WARNING',
+            'class': 'logging.FileHandler',
+            'filename': 'testlogfile.log',
+        }
+    },
+    'loggers': {
+        'custom_logger': {
+            'level': 'DEBUG',
+            'handlers': ['custom_handler', 'custom_handler_2'],
+            'propagate': True
+        }
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -130,6 +195,7 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
@@ -137,3 +203,5 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+SHELL_PLUS = "ipython"

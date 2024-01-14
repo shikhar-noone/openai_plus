@@ -20,6 +20,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('', include('openai_plus.urls')),
+    path('/500.html', include('openai_plus.urls')),
     path('rest/', include('rest_framework.urls')),
     path("admin/", admin.site.urls),
 ]

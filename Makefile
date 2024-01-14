@@ -10,28 +10,43 @@ remove-app:
 	docker exec openai_container rm -rf openai_plus
 
 copy-app:
-	docker cp ./openai_plus openai_container:./opt/app/
+	docker cp ./openai_plus openai_container:.app/
 
 deploy:
 	python manage.py makemigrations
 	python manage.py migrate
 	docker exec openai_container rm -rf openai_plus
-	docker cp ./openai_plus openai_container:./opt/app/
+	docker cp ./openai_plus openai_container:.app/
 	docker restart openai_container
 
 
 deploy-conf:
-	python manage.py makemigrations
-	python manage.py migrate
+	docker rm -f openai_container
 	docker build -t openai_plus_image .
-	docker run --name openai_container -it -p 8020:8020 \
-		-e DJANGO_SUPERUSER_USERNAME=admin \
-		-e DJANGO_SUPERUSER_PASSWORD=sekret1 \
-		-e DJANGO_SUPERUSER_EMAIL=admin@example.com \
+	docker run --env-file .env \
+		--name openai_container \
+		-v $(shell pwd):/app \
+		-p 8030:8020 \
 		openai_plus_image
 
-remove-container:
+remove-container-image:
 	docker rm -f openai_container
+	docker rmi openai_plus_image
 
-remove-image:
-	docker image rm openai_plus_image
+shell_plus:
+	docker exec openai_container python manage.py shell_plus --ipython
+
+reload-nginx:
+	docker exec -it openai_container service nginx reload
+
+migrate:
+	docker compose -f ./docker.compose.local.yml run --rm openai python manage.py migrate
+
+makemigrations:
+	docker compose -f ./docker.compose.local.yml run --rm openai python manage.py makemigrations
+
+getvolume:
+	docker inspect -f '{{ .Mounts }}' openai_container
+
+bw:
+	docker compose -f ./docker.compose.local.yml build watcher

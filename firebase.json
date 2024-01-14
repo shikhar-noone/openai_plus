@@ -1,0 +1,12 @@
+{
+  "emulators": {
+    "hosting": {
+      "port": 8040
+    },
+    "ui": {
+      "enabled": true,
+      "port": 8030
+    },
+    "singleProjectMode": true
+  }
+}

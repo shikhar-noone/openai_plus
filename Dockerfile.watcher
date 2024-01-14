@@ -1,0 +1,5 @@
+FROM alpine:latest
+COPY ./openai_plus/watcher_actions.sh app/openai_plus/
+
+WORKDIR /app/openai_plus
+RUN chmod +x ./watcher_actions.sh
